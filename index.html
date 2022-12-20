@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>To Do list</title>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Caramel&family=Dancing+Script:wght@600&family=Lato:ital@0;1&display=swap');
+
+          *
+          {
+            margin: 0;
+            padding: 0;
+            outline: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            user-select: none;
+            font-size: large;
+          }
+
+          body, html
+          {
+            background-color: #ffc8c5;
+            font-family: "Lato", sans-serif;
+            width: 100%;
+            height: 100%;
+          }
+
+          body
+          {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #ffc8c5;
+            font-family: "Lato", sans-serif;
+            background-image: url('back.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+          }        
+
+          .everything
+          {
+            text-align: left;
+            width: 50%;
+            min-width: 400px;
+          }
+
+          h2
+          {
+            font-family: "Dancing Script", cursive;
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 45px;
+            color: #335c62;
+            font-weight: 700;
+            cursor: pointer;
+          }
+
+          h4
+          {
+            font-family: "Dancing Script", cursive;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 30px;
+            color: #5c5c5c;
+            font-weight: 300;
+          }
+
+          a 
+          {
+            text-decoration: none;
+            color: inherit;
+          }
+
+          ul 
+          {
+            font-family: "Lato", sans-serif;
+            font-size: 20px;
+            font-weight: 400;
+            font-style: italic;
+            margin: 50px;
+          }
+          
+          ul li 
+          {
+            margin-bottom: 10px;
+            color: #5c5c5c;
+          }
+          
+          ul li a 
+          {
+            margin-left: 15px;
+            color: white;
+            cursor: pointer;
+            border: 1px solid #7cbe7b;
+            border-radius: 5px;
+            padding: 0 15px 2px 15px;
+            background-color: #7cbe7b;
+          }
+          
+          ul li a:hover {
+            opacity: 0.8;
+          }          
+
+          input, button
+          {
+            font-family: "Lato", sans-serif;
+          }
+
+          #getInputID
+          {
+            border: 2px solid #dcdce6;
+            border-radius: 8px;
+            padding: 0 24px;
+            margin-right: 10px;
+            width: 60%;
+            height: 40px;
+            color: #5c5c5c;
+          }
+          #getInputID:hover
+          {
+            opacity: 0.9;
+          }
+
+          #buttonAdd
+          {
+            background-color: #59A2AD;
+            color: white;            
+            border: 0px solid #dcdce6;
+            border-radius: 8px;
+            width: 30%;
+            height: 40px;
+            cursor: pointer;
+          }
+          #buttonAdd:hover
+          {
+            opacity: 0.9;
+          }
+
+          #outputResult
+          {
+            justify-content: center;
+            align-items: center;
+          }
+
+          .doneButton
+          {
+            background-color: #7CBD7A;
+            color: white;                       
+            border: 0px solid gainsboro;
+            border-radius: 8px;
+            width: 71px;
+            height: 30px;
+            cursor: pointer;
+            font-style: italic;
+            margin: 1px;
+          }
+          .doneButton:hover
+          {
+            opacity: 0.9;
+          }
+
+          .footerThing
+          {
+            font-size: xxx-large;
+            color: gray;
+            font-family: 'Caramel', cursive;
+          }
+        </style>
+    </head>
+    <body>
+        <script>
+          let controlArray = new Array();
+
+          let x = 0;
+
+          function displayAll()
+          {
+              let result = '';
+
+              for (let j = 0; j < controlArray.length; j++) 
+              {
+                  let gotIDinp = j.toString(); + 'done';
+                  result += '<li id="' + gotIDinp + '">' + controlArray[j] + '&nbsp&nbsp' + '<button class="doneButton" onclick="doneRemove(' + gotIDinp + ');">done</button>' + '</li>';
+              }
+              if (controlArray.length == 0)
+              {
+                  result = '';
+              }
+
+              document.getElementById("outputResult").innerHTML = result;
+          }
+
+          function addThis()
+          {
+              let enterValue = document.getElementById("getInputID").value;
+              if (enterValue != "")
+              {
+                  controlArray.splice(x, 0, enterValue);
+                  x++;
+                  displayAll();
+                  document.getElementById("getInputID").value = '';
+              }
+              else
+              {
+                  alert("Enter a valid thing");
+              }
+          }
+
+          function doneRemove(gotID)
+          {
+              let removeHelp = document.getElementById(gotID).innerText;
+              removeHelp = removeHelp.replace(/\s/g, "");
+              for (let i = 0; i < controlArray.length; i++)
+              {
+                  let checkVar = controlArray[i] + 'done';
+                  if (checkVar == removeHelp)
+                  { 
+                      controlArray.splice(i, 1);
+                  }
+              }
+              document.getElementById(gotID).style.textDecoration = 'line-through';
+          }
+        </script>
+        <div class="everything">
+            <h2>to do list</h2>
+            <ul id="outputResult"></ul>
+            <p></p>
+            <input type="text" id="getInputID" placeholder="New task" required><button id="buttonAdd" onclick="addThis();">Add</button>
+            <p></p>
+            <h4>Insert a new task</h4>
+        </div>
+        <div>
+          <p class="footerThing">"Updating life is important so wait for upcoming upates <span style="font-family: 'Lato', sans-serif; font-size: xx-large;">:)</span>"</p>
+        </div>
+    </body>
+</html>
